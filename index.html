@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <script src="/index.js"></script>
+    <title>Boss Fight</title>
+</head>
+<body>
+     <div class="container">
+        <div class="bossinfo">
+            <h1 id="bozzhealthz">300</h1>
+        </div>
+        <div class="dicecontainer">
+            <div class="dice"></div>
+            <div class="dice"></div>
+            <div class="dice"></div>
+            <div class="dice"></div>
+            <div class="dice"></div>
+        </div>
+        <div class="playerturns">
+            <h1>Turns Taken:</h1>
+            <h1 id="turnstaken">0</h1>
+        </div>
+        <div class = "playerturnsremain">
+            <h1>Turns Remaining:</h1>
+            <h1 id="remainingturns">15</h1>
+        </div>
+        <div class="controls">
+            <button id="roll" onclick ="rollDice()">ROLL!</button>
+        </div>
+        <div class="win">
+            <h1 id="wintext"></h1>
+        </div>
+    </div>
+    <script>
+        //im helpful
+        const diceContainers = document.querySelectorAll(".dice"); //get all elements with class of dice
+        const rollBtn = document.getElementById("roll");
+        const playerturn = document.getElementById("turnstaken")
+        const textwin = document.getElementById("wintext")
+        const turnsremaining = document.getElementById("remainingturns")
+        let turnlimit = 15
+        let multiplier = 1
+
+        
+        let dice = []
+        
+        diceContainers.forEach((di, idx)=>{
+            //di is  the current html element in the array
+            //idx is the index of the array
+            dice.push(new Dice(di));
+
+        })
+        // function rollDice(){
+        //     dice.forEach((d)=>{
+        //         d.roll();
+        //     })
+        //     console.log(calculateDiceTotal());
+        // }
+        let turns = 0
+        async function rollDice(){
+            rollBtn.disabled = true
+            let rolls=[];
+            for(let d of dice){
+                rolls.push(d.roll()); //rolls is an array of promises
+            }
+            //await requires an async environment
+            await Promise.all(rolls); //stop exxecuting until all promises are complete
+            console.log(calculateDiceTotal())
+            turnincrease()
+            losscheck()
+            if (losscheck() == false){
+                console.log("you lost")
+            }else{
+
+            checkhealth()
+        }
+            
+            
+            remainingupdate(turnlimit)
+        }
+        const healthbar = document.getElementById("bozzhealthz")
+        let currentHP = 300
+        function calculateDiceTotal(){
+            let total = 0
+            dice.forEach((d)=>{
+                total += d.value
+            },
+        )
+
+        currentHP = currentHP - total
+        healthbar.innerHTML = currentHP
+
+        return total;
+
+        
+    }
+    function turnincrease(){
+        turns += 1
+        playerturn.innerHTML = turns
+    }
+    function losscheck(){
+        if (turns >= turnlimit){
+
+            rollBtn.disabled = true
+            textwin.innerHTML = `You lost! Loser mcloserton`
+            return false
+        }else{
+           return true 
+           
+        }
+        
+    }
+    function remainingupdate(turnlimit){
+        turnrem = turnlimit - turns
+        turnsremaining.innerHTML = turnrem
+
+    }
+    function checkhealth(){
+        if(currentHP <= 0){
+            currentHP = 0
+            rollBtn.disabled = true
+            healthbar.innerHTML = currentHP
+            textwin.innerHTML = `You Win. Good Job! it took you ${turns} turns`
+        }
+        else{
+            rollBtn.disabled = false
+        }
+    }
+    </script>
+</body>
+</html>

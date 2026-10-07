@@ -1,0 +1,86 @@
+@font-face {
+  font-family: "architectsdaughter";
+  src: url("../fonts/ArchitectsDaughter.ttf");
+}
+@font-face {
+  font-family: "bombardier";
+  src: url("../fonts/BOMBARD_.ttf");
+}
+@font-face {
+  font-family: "kiwisoda";
+  src: url("../fonts/KiwiSoda.ttf");
+}
+
+body{
+    background-color:  black;
+    color:  white;
+    font-family: "architectsdaughter";
+}
+
+.bossinfo{
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    color: rgba(255, 0, 0, 0.486);
+}
+
+.dice > img{
+    display: block;
+}
+
+.dice{
+    min-width: 100px;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.dice.locked{
+    border: 5px double rgb(153, 152, 152);
+    border-radius: 5px;
+}
+
+.dicecontainer{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+.playerturns{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 25px;
+    color: rgba(255, 123, 0, 0.5);
+    height: 30px;
+}
+.playerturnsremain{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 50px;
+    color: rgba(255, 81, 0, 0.507);
+    height: 30px;
+}
+
+.controls{
+    display: flex;
+    justify-content: center;
+    margin-top: 2em;
+}
+
+.controls #roll{
+    font-family: 'bombardier';
+    font-size: 2.5em;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 255, 0.425);
+    color: rgba(0, 255, 255, 0.418);
+}
+
+
+
+#wintext{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    color: rgba(204, 0, 255, 0.541);
+    height: 30px;
+}

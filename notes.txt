@@ -1,0 +1,10 @@
+Dice Game rules
+upper limit number: 30
+upper limit including crit(hitting all same num): 45
+lowest limit number: 5
+lowest including crit: 10
+enemy healthz: 300?
+permanent multiplier?: +5x if you get 1,2,3,4,5 sequentially, 1,2,3,4,5 any order = +2x,  
+move limit : 15
+crit with 1's: 100
+crit with 6's: 45
