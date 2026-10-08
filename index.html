@@ -10,7 +10,7 @@
 <body>
      <div class="container">
         <div class="bossinfo">
-            <h1 id="bozzhealthz">300</h1>
+            <h1 id="bozzhealthz">⚔️300⚔️</h1>
         </div>
         <div class="dicecontainer">
             <div class="dice"></div>
@@ -24,11 +24,11 @@
             <h1 id="turnstaken">0</h1>
         </div>
         <div class = "playerturnsremain">
-            <h1>Turns Remaining:</h1>
+            <h1>💣Turns Remaining:</h1>
             <h1 id="remainingturns">15</h1>
         </div>
         <div class="controls">
-            <button id="roll" onclick ="rollDice()">ROLL!</button>
+            <button id="roll" onclick ="rollDice()">🎲ROLL!🎲</button>
         </div>
         <div class="win">
             <h1 id="wintext"></h1>
@@ -43,9 +43,10 @@
         const turnsremaining = document.getElementById("remainingturns")
         let turnlimit = 15
         let multiplier = 1
-
+        let tempmult = 1
         
         let dice = []
+        let values = []
         
         diceContainers.forEach((di, idx)=>{
             //di is  the current html element in the array
@@ -61,11 +62,16 @@
         // }
         let turns = 0
         async function rollDice(){
+            tempmult = 1
+            values = []
             rollBtn.disabled = true
             let rolls=[];
             for(let d of dice){
                 rolls.push(d.roll()); //rolls is an array of promises
+                
             }
+            
+            
             //await requires an async environment
             await Promise.all(rolls); //stop exxecuting until all promises are complete
             console.log(calculateDiceTotal())
@@ -87,11 +93,43 @@
             let total = 0
             dice.forEach((d)=>{
                 total += d.value
+                values.push(d.value)
             },
+            
+            
+        )
+        let die = [...values]
+        die = die.join(",")
+            console.log(die)
+        
+            //adds 5x to multiplier if you get 1,2,3,4,5 sequentially
+        if (die == "1,2,3,4,5"){
+            multiplier += 5
+            console.log("Ultraricoshot x5")
+        }
+        dice.forEach((d)=>{
+                if(d.value == 6){
+                    tempmult -= .1
+                    console.log("Tmepmult changed")
+                }
+                else if(d.value == 5){
+                    tempmult -= .05
+                    console.log("Tmepmult changed")
+                }
+                else if(d.value == 2){
+                    tempmult += .1
+                    console.log("Tmepmult changed")
+                }
+                else if(d.value == 1){
+                    tempmult += .2
+                    console.log("Tmepmult changed")
+                }
+            }
         )
 
-        currentHP = currentHP - total
-        healthbar.innerHTML = currentHP
+        
+        currentHP = Math.round(currentHP - (total * multiplier * tempmult))
+        healthbar.innerHTML = `⚔️${currentHP}⚔️`
 
         return total;
 
@@ -105,7 +143,7 @@
         if (turns >= turnlimit){
 
             rollBtn.disabled = true
-            textwin.innerHTML = `You lost! Loser mcloserton`
+            textwin.innerHTML = `💥You lost! Get exploded Idiot💥`
             return false
         }else{
            return true 
@@ -123,7 +161,7 @@
             currentHP = 0
             rollBtn.disabled = true
             healthbar.innerHTML = currentHP
-            textwin.innerHTML = `You Win. Good Job! it took you ${turns} turns`
+            textwin.innerHTML = `🎆You Win. You defused the bomb! it took you ${turns} turns🎆`
         }
         else{
             rollBtn.disabled = false
